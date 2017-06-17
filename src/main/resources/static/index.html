@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--Optional theme-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+
+    <!--JQuery library-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <!-- My Js functions-->
+    <script type="text/javascript" src="js/main.js" rel="stylesheet"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1>Json Web Token with Spring REST</h1>
+        <p class="lead">JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely
+            between two parties.
+            <a href="https://jwt.io/">JWT.IO </a>
+            allows you to decode, verify and generate JWT.</p>
+    </div>
+
+    <div class="panel panel-primary" id="loggedIn" style="display: none;">
+        <div class="panel-heading">We got a JSON Web Token from our Rest End Point. The token is valid for 2 minutes</div>
+        <div class="panel-body" id="tokenContent" style="overflow-x: scroll"></div>
+    </div>
+
+    <form class="form-signin" id="loginPanel">
+        <!--<h2 class="form-signin-heading">Please sign in</h2>-->
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button onclick="login()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        <div class="alert alert-danger alert-dismissible" role="alert" style="display: none;" id="loginError">Login
+            error
+        </div>
+        <div class="checkbox">
+            <div class="alert alert-info">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-success">USER: user@user.com / user</li>
+                    <li class="list-group-item list-group-item-success">ADMIN: admin@admin.com / admin</li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    <div id="userLoggedInfo" style="display: none;">
+        <div class="panel panel-default" id="infoPanel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Authenticated user</h3>
+            </div>
+            <div class="panel-body">
+                <div id="userInfoBody"></div>
+                <button onclick="logout()" class="btn btn-lg btn-primary btn-block" id="logoutButton">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-lg-4">
+            <h2>Access a Non-Secured REST Point</h2>
+            <p>This is a GET request to a non-secured entry point. It can be done without a user being authenticated.
+                We won't use a token here. We will receive a 'date' created by the server.</p>
+            <p><a class="btn btn-success btn-lg btn-block" onclick="getTodayDate()" role="button">Get</a></p>
+        </div>
+        <div class="col-lg-4">
+            <h2>Access a Secured REST Point with ROLE_USER</h2>
+            <p>This is a GET request to a secured entry point with ROLE_USER. This can be accessed by users with
+                ROLE_USER or ROLE_ADMIN. We will receive credential of the logged user.</p>
+            <p><a class="btn btn-primary btn-lg btn-block" onclick="getUserDetails()" role="button">Get</a></p>
+        </div>
+        <div class="col-lg-4">
+            <h2>Access a Secured REST Point with ROLE_ADMIN</h2>
+            <p>This is a GET request to a secured entry point with ROLE_ADMIN. This can be accessed by users only with
+                ROLE_ADMIN. We will receive credential of all the users from the DB.</p>
+            <p><a class="btn btn-warning btn-lg btn-block" onclick="getAllUsers()" role="button">Get</a></p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="requestModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Response</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div> <!-- /container -->
+
+</body>
+</html>
