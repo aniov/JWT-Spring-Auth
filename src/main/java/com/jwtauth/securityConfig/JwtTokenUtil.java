@@ -27,9 +27,10 @@ public class JwtTokenUtil {
 
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_AUDIENCE = "audience";
+    private static final String CLAIM_ROLE = "role";
 
     private Integer expirationInMinutes = 2;
-    private Key secretKey = MacProvider.generateKey();
+    private transient Key secretKey = MacProvider.generateKey(); //creates a 512-bit secure-random key (the default):
     /*@Value("${config.security.secret}")
     private String secretKey;*/
 
@@ -42,13 +43,14 @@ public class JwtTokenUtil {
 
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         claims.put(CLAIM_KEY_AUDIENCE, device);
+        claims.put(CLAIM_ROLE, userDetails.getAuthorities());
 
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationInMinutes * 60000))
                 .setIssuer(issuer)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .signWith(SignatureAlgorithm.HS512, secretKey) //if we sign with 512 alg. we need also a 512-bit secretKey
                 .compact();
     }
 
@@ -71,11 +73,11 @@ public class JwtTokenUtil {
      */
     public boolean tokenIsValid(String authToken) {
 
-      Claims claims = getClaimsFromToken(authToken);
+        Claims claims = getClaimsFromToken(authToken);
 
-      if (claims == null || ! new Date().before(claims.getExpiration()) || ! claims.getIssuer().equals(issuer)) {
-          return false;
-      }
-      return true;
+        if (claims == null || !new Date().before(claims.getExpiration()) || !claims.getIssuer().equals(issuer)) {
+            return false;
+        }
+        return true;
     }
 }
