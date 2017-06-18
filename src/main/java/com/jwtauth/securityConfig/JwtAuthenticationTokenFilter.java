@@ -49,7 +49,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
             String username = claims.getSubject();
 
-            //Check if user still exists, if is not logged in, we logged him in
+            //Check if user still exists, if is not logged in, we log him in
             UserDetails userDetails = userService.loadUserByUsername(username);
             if (userDetails != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UsernamePasswordAuthenticationToken authenticationToken =
@@ -59,8 +59,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
-
     }
 }

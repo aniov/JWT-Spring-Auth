@@ -12,6 +12,10 @@ import java.io.IOException;
 /**
  * Created by Marius on 6/12/2017.
  */
+
+/**
+ * Takes care of HTTP Response in case of Token validation error
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

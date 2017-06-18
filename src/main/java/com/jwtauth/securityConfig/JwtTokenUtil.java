@@ -74,7 +74,6 @@ public class JwtTokenUtil {
     public boolean tokenIsValid(String authToken) {
 
         Claims claims = getClaimsFromToken(authToken);
-
         if (claims == null || !new Date().before(claims.getExpiration()) || !claims.getIssuer().equals(issuer)) {
             return false;
         }

@@ -80,7 +80,7 @@ function parseJwt(token) {
 function getAuthTokenFromLocalStorage() {
     var token = localStorage.getItem(TOKEN_KEY);
     if (token) {
-        return {"Authorization": token};
+        return {"Authorization": token}; //this is the name after we will be looking for token in the back-end
     } else {
         return {};
     }
