@@ -1,5 +1,6 @@
 # JSON Web Token Example
-Example of a Spring Security End Point with JWT
+Example of a Spring Security End Point with JWT.
+
 For this to make it work you need to set up your data base (MySql) using properties from application.properties file.
 
 Screens
